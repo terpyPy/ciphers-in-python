@@ -1,32 +1,54 @@
 #!/usr/bin/python3
 #
 #  Author:      Cameron Kerley
-#  Date:        27 July 2019
+#  Date:        23 Feb 2020
 #  Description: password tool run file
 import allTheFuctions
-import random
+import math
 import sys
 mode = ''
+keyDivisor = 91
 while True:
-    key = random.randrange(1, 94)
-    mode = (input('encrypt/decrypt?: ', ))
-    scram = ''
-    if mode == "encrypt":
-        password = (input('Enter a phrase you want to use: ', ))
-        scram = (allTheFuctions.encryptMessage(key, password))
-        scram = (allTheFuctions.ceaser(key, scram, mode))
-        print('hash: ', scram, '\n', 'key: ', key)
 
-    # i need to create a thingUndo function decryption work with the reversing
-    # and take multi key input to undo the 2 current layers i.e. key1 and key2
-    # d1B17po7T1Id4E1
-    elif mode == 'decrypt':
-        key = int(input('key used?: '))
-        encryptPass = input('phrase used?: ')
-        unScram = allTheFuctions.ceaserUndo(key, encryptPass, mode)
+    mode = (input('[encrypt/decrypt?]: ', ))
+    scram = ''
+    unScram = ''
+    userOption = ((mode[0][0]).lower())
+    if userOption == 'e':  # step1 check first char input
+        password = (input('[Enter a phrase you want to use]: ' ))
+        key = len(password)  # 1.1 get variable key
+    #
+    #
+    # math.sqrt() is a better logic for block encrypted strings
+        while key >= keyDivisor:
+            key = round(math.sqrt(key))
+        print('e key', key,'\n')
+    #
+    # layer one calculated key string, store the block encrypted txt string
+        
+    #entlilllnk nohIf cnb
+    #Tfoccth  t fsnltamn 
+    # scrambles the txt given the key previous, this is point of cipher origan for symbols in LETTERS
+        scram = (allTheFuctions.ceaser(key,password ))
+        scram = (allTheFuctions.encryptMessage(key, scram))
+        print('[hash]:--- ', scram, '\n', '\n')
+#
+#
+# decrypt button check
+    elif userOption == 'd':
+        encryptPass = input('[phrase used?]: ',)  # encrypted phrase
+        key = len(encryptPass)  # get the legnth of the keystring
+
+        while key >= keyDivisor:
+            key = round(math.sqrt(key))
+        print('key calculated!', key,'\n')
+
+        # decrypt layer one calculated key string, store the still block encrypted txt string
+        unScram += allTheFuctions.ceaserUndo(key, encryptPass)
+        # with the given key decode the string position
         unScram = allTheFuctions.decryptMessage(key, unScram)
-        print('removed sudo hash:', unScram)
-    elif mode == 'q' or 'quit':
+        print('[removed sudo hash]:---- ', unScram)
+    elif userOption == 'q':
         print('closing tool')
         sys.exit()
     else:

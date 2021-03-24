@@ -4,12 +4,13 @@
 #  Date:        16 March 2019
 #  Description: ideas for more functions source code
 import math
+import argparse
 
 
 ##########################################################################################################
-# Transposition Cipher Encryption
-
-
+# Description: Transposition Cipher Encryption
+# Each string in ciphertext represents a column in the grid.
+# Convert the ciphertext list into a single string value and return it.
 ##########################################################################################################
 def encryptMessage(key, message):
     # Each string in ciphertext represents a column in the grid.
@@ -28,7 +29,7 @@ def encryptMessage(key, message):
             # move pointer over
             pointer += key
 
-    # Convert the ciphertext list into a single string value and return it.
+    print(ciphertext)
     return ''.join(ciphertext)
 
 
@@ -39,9 +40,9 @@ def decryptMessage(key, message):
     # of strings. First, we need to calculate a few values.
 
     # The number of "columns" in our transposition grid:
-    numOfColumns = math.ceil(len(message) / key)
+    numOfColumns = key
     # The number of "rows" in our grid will need:
-    numOfRows = key
+    numOfRows = math.ceil(len(message)/key)
     # The number of "shaded boxes" in the last "column" of the grid:
     numOfShadedBoxes = (numOfColumns * numOfRows) - len(message)
 
@@ -62,41 +63,37 @@ def decryptMessage(key, message):
         if (col == numOfColumns) or (col == numOfColumns - 1 and row >= numOfRows - numOfShadedBoxes):
             col = 0
             row += 1
-
+    #print(plaintext, '\n')
     return ''.join(plaintext)
-
 
 ##########################################################################################################
 #  Description: Caesar Cipher
 # the string to be encrypted/decrypted
-
-
 # stores the encrypted/decrypted form of the message
-# capitalize the string in message
-# message = message.upper()
-def ceaser(key, message, mode):
+##########################################################################################################
+
+
+def ceaser(key, message):
     mode = 'encrypt'  # set to 'encrypt' or 'decrypt'
     # every possible symbol that can be encrypted
-    LETTERS = '!"#$%&\'()*+,-./0123456789:;<=>?@ ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz~'
+    LETTERS = '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz~'
     translated = ''
     # run the encryption/decryption code on each symbol in the message string
     for symbol in message:
+        # TODO: math.gcd is a better logic
         if symbol in LETTERS:
             # get the encrypted (or decrypted) number for this symbol
-            num = LETTERS.find(symbol)  # get the number of the symbol
-            if mode == 'encrypt':
-                num = num + key
-
-            # handle the wrap-around if num is larger than the length of
-            # LETTERS or less than 0
-            if num >= len(LETTERS):
-                num = num - len(LETTERS)
-            elif num < 0:
-                num = num + len(LETTERS)
+            num = LETTERS.find(symbol)
+            num = num + key
+            # handle the wrap-around if num is larger than the length of LETTERS or less than 0
+            totalKeys = len(LETTERS) - 1
+            while num >= totalKeys:
+                num = num - totalKeys
+            if num < 1:
+                num = num + totalKeys
 
             # add encrypted/decrypted number's symbol at the end of translated
             translated = translated + LETTERS[num]
-
         else:
             # just add the symbol without encrypting/decrypting
             translated = translated + symbol
@@ -105,25 +102,23 @@ def ceaser(key, message, mode):
     return translated
 
 
-def ceaserUndo(key, message, mode):
+def ceaserUndo(key, message):
     mode = 'decrypt'
     # every possible symbol that can be encrypted
-    LETTERS = '!"#$%&\'()*+,-./0123456789:;<=>?@ ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz~'
+    LETTERS = '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz~'
     translated = ''
     # run the encryption/decryption code on each symbol in the message string
     for symbol in message:
         if symbol in LETTERS:
             # get the encrypted (or decrypted) number for this symbol
             num = (LETTERS.find(symbol))  # get the number of the symbol
-            if mode == 'decrypt':
-                num = (num - key)
+            num = (num - int(key))
 
-            # handle the wrap-around if num is larger than the length of
-            # LETTERS or less than 0
-            if num >= len(LETTERS):
-                num = (num - len(LETTERS))
-            elif num < 0:
-                num = (num + len(LETTERS))
+            totalKeys = len(LETTERS) - 1
+            while num >= totalKeys:
+                num = num - totalKeys
+            if num < 1:
+                num = num + totalKeys
 
             # add encrypted/decrypted number's symbol at the end of translated
             translated = (translated + LETTERS[num])
@@ -148,26 +143,60 @@ def reversePrint(intStr):
 
 
 ##########################################################################################################
-#
-# a function that removes 0 from a list of numbers
-def removenumber(newList, length, n):
-    i = 0
-    n = 0
-    while i < length:
-        if newList[i] == n:
-            newList.remove(newList[i])
-            #  an element is removed
-            # so decrease the length by 1
-            length = length - 1
-            # run loop again to check element
-            # at same index, when removed
-            # next item will shift to the left
-            continue
-        i = i + 1
-        listSize = len(newList)
+'''find the most commen element by making the list an irt set and count occurrences fo each ele
+then max the set of occurrencesget the largest and find its index in oldlist
+return the elem of that index, then given the common ele enumerate the list while adding 
+all elements not commen to thenew list return value'''
+##########################################################################################################
 
-    print(newList)
+
+def removeElement(oldList: list):
+    newList = []
+    mostCommenEle = max(set(oldList), key=oldList.count)
+    for pos, var in enumerate(oldList):
+        if oldList[pos] == mostCommenEle:
+            continue
+        else:
+            newList += [var]
+    totalRemoved = len(oldList) - len(newList)
+    return newList, totalRemoved, mostCommenEle
+
+
 ###############################################################################################################
+'''thc calculator by weight 
+{b1*(g)+0.b2*(h)} / { g+h }'''
+###############################################################################################################
+
+
+def avgTHC(thcBud=0.2, cbdBud=0.003, thcWeight=0.5, cbdWeight=0.5):
+
+    calc = ((thcBud*(thcWeight) + cbdBud*(cbdWeight)) / (thcWeight + cbdWeight))
+
+    precent = str(int(round(calc, 2) * 100)) + '%'
+
+    outPutStr = ('thc content: ', ('THC bud= ' + str(thcBud)), (' CBD bud= ' + str(cbdBud)) + '\n' + 'bud weight: ', ('THC bud= ' + str(thcWeight)), (' CBD bud= ' + str(cbdWeight)) + '\n' + 'avg THC content: ' + precent)
+
+    print(''.join(outPutStr))
+
+
+################################################################################################################
+"""how to program f(x) functions"""
+################################################################################################################
+def f(x):
+    n = 3
+    c = -(4)
+    return  x + n**(c**(x + n))**n
+################################################################################################################
+class profitCal:
+    def __init__(self,goldToSpend,buyPrice,buyAmount,sellPrice,sellAmount):
+        self.goldToSpend = goldToSpend
+        self.buyPrice = buyPrice
+        self.buyAmount = buyAmount
+        self.sellPrice = sellPrice
+        self.sellAmount = sellAmount
+        self.posTax = 0.05
+
+
 
 def main():
     pass
