@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "C:\\Users\\coolc\\Desktop\\pythonClass\\PrivateBot\\ciphers-in-python"
+		}
+	],
+	"settings": {
+		"python.analysis.extraPaths": ["C:\\Users\\coolc\\Desktop\\pythonClass\\PrivateBot\\ciphers-in-python\\passwordGen"]
+	}
+}
