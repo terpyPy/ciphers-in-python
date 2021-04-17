@@ -1,17 +1,16 @@
-
+  
+#!/usr/bin/python3
 #
 #  Author:      Cameron Kerley
 #  Date:        23 Feb 2020
 #  Description: password tool run file
 import allTheFuctions
+import math
 import sys
-from random import randrange
-from math import sqrt
-
 mode = ''
-
+keyDivisor = 91
 while True:
-    keyDivisor = randrange(1,94)
+
     mode = (input('[encrypt/decrypt?]: ', ))
     scram = ''
     unScram = ''
@@ -23,23 +22,17 @@ while True:
     #
     # math.sqrt() is a better logic for block encrypted strings
         while key >= keyDivisor:
-            key = round(sqrt(key)) 
+            key = round(math.sqrt(key))
         print('e key', key,'\n')
-       
     #
     # layer one calculated key string, store the block encrypted txt string
         
     #entlilllnk nohIf cnb
     #Tfoccth  t fsnltamn 
-
     # scrambles the txt given the key previous, this is point of cipher origan for symbols in LETTERS
-        scram += (allTheFuctions.ceaser(key,password))
-        '''TODO: I wanna add a function that removes the most commen element in list
-        and then removes or changes them, and somehow adds that info to the string 
-        in such away that i know what position to add them back'''
-
-        encryptedPhrase = (allTheFuctions.encryptMessage(key, scram))
-        print('[hash]:--- ', encryptedPhrase, '|end', '\n')
+        scram = (allTheFuctions.ceaser(key,password ))
+        scram = (allTheFuctions.encryptMessage(key, scram))
+        print('[hash]:--- ', scram, '\n', '\n')
 #
 #
 # decrypt button check
@@ -48,13 +41,13 @@ while True:
         key = len(encryptPass)  # get the legnth of the keystring
 
         while key >= keyDivisor:
-            key = round(sqrt(key)) 
+            key = round(math.sqrt(key))
         print('key calculated!', key,'\n')
-        # with the given key decode the string position
-        # decrypt block cipher, store the still block encrypted txt string
+
+        # decrypt layer one calculated key string, store the still block encrypted txt string
         unScram += allTheFuctions.ceaserUndo(key, encryptPass)
+        # with the given key decode the string position
         unScram = allTheFuctions.decryptMessage(key, unScram)
-        
         print('[removed sudo hash]:---- ', unScram)
     elif userOption == 'q':
         print('closing tool')
