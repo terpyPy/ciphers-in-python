@@ -4,15 +4,24 @@
 #  Date:        16 March 2019
 #  Description: ideas for more functions source code
 import math
-import argparse
 
 
+class stack:
+    def __init__(self):
+        self.callstack = ''
+        print('Function name get __init__')
+    def show(self, call):
+        self.callstack += call
+        print('called from', __name__, 'trying', call)
+
+callstack = stack()
 ##########################################################################################################
 # Description: Transposition Cipher Encryption
 # Each string in ciphertext represents a column in the grid.
 # Convert the ciphertext list into a single string value and return it.
 ##########################################################################################################
 def encryptMessage(key, message):
+    callstack.show('encryptMessage')
     # Each string in ciphertext represents a column in the grid.
     ciphertext = [''] * key
 
@@ -35,6 +44,7 @@ def encryptMessage(key, message):
 
 # Transposition Cipher Decryption
 def decryptMessage(key, message):
+    callstack.show('decryptMessage')
     # The transposition decrypt function will simulate the "columns" and
     # "rows" of the grid that the plaintext is written on by using a list
     # of strings. First, we need to calculate a few values.
@@ -74,6 +84,7 @@ def decryptMessage(key, message):
 
 
 def ceaser(key, message):
+    callstack.show('ceaser')
     mode = 'encrypt'  # set to 'encrypt' or 'decrypt'
     # every possible symbol that can be encrypted
     LETTERS = '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz~'
@@ -103,6 +114,7 @@ def ceaser(key, message):
 
 
 def ceaserUndo(key, message):
+    callstack.show('ceaserUndo')
     mode = 'decrypt'
     # every possible symbol that can be encrypted
     LETTERS = '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz~'
@@ -133,6 +145,7 @@ def ceaserUndo(key, message):
 
 #########################################################################################################
 def reversePrint(intStr):
+    callstack.show('reversePrint')
     # revInt will hold the output for our new string
     revIntStr = ''
     index = len(intStr)
@@ -150,16 +163,21 @@ all elements not commen to thenew list return value'''
 ##########################################################################################################
 
 
-def removeElement(oldList: list):
+def removeElement(oldList: list, replacement: str):
+    callstack.show('removeElement')
     newList = []
     mostCommenEle = max(set(oldList), key=oldList.count)
+    removedIndexes = []
+    totalRemoved = 0
     for pos, var in enumerate(oldList):
         if oldList[pos] == mostCommenEle:
-            continue
+            totalRemoved +=1 
+            newList += [replacement]
         else:
             newList += [var]
-    totalRemoved = len(oldList) - len(newList)
-    return newList, totalRemoved, mostCommenEle
+            removedIndexes += [pos]
+    
+    return newList, totalRemoved, mostCommenEle, removedIndexes
 
 
 ###############################################################################################################
@@ -169,6 +187,7 @@ def removeElement(oldList: list):
 
 
 def avgTHC(thcBud=0.2, cbdBud=0.003, thcWeight=0.5, cbdWeight=0.5):
+    callstack.show('avgTHC')
 
     calc = ((thcBud*(thcWeight) + cbdBud*(cbdWeight)) / (thcWeight + cbdWeight))
 
@@ -183,11 +202,14 @@ def avgTHC(thcBud=0.2, cbdBud=0.003, thcWeight=0.5, cbdWeight=0.5):
 """how to program f(x) functions"""
 ################################################################################################################
 def f(x):
+    callstack.show('f(x)')
+    
     n = 3
     c = -(4)
     return  x + n**(c**(x + n))**n
 ################################################################################################################
 class profitCal:
+    #callstack.show('profitCal')
     def __init__(self,goldToSpend,buyPrice,buyAmount,sellPrice,sellAmount):
         self.goldToSpend = goldToSpend
         self.buyPrice = buyPrice
@@ -199,8 +221,12 @@ class profitCal:
 
 
 def main():
+    callstack.show('nothing called')
     pass
 
 
 if __name__ == '__main__':
     main()
+    pass
+else:
+    pass
