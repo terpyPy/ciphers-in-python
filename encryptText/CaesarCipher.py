@@ -6,11 +6,13 @@
 # the string to be encrypted/decrypted
 import pyperclip
 import encryptText
+import math
 def ceaser(key, message:str, mode):
      # set to 'encrypt' or 'decrypt'
     # every possible symbol that can be encrypted
     LETTERS = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
-    
+    if key > len(LETTERS):
+        key = int(math.sqrt(key))
     LETTERS = encryptText.keyStringShuffle(LETTERS, key)
     translated = ''
 
@@ -28,7 +30,7 @@ def ceaser(key, message:str, mode):
             # LETTERS or less than 0
             while num >= len(LETTERS):
                 num = num - len(LETTERS)
-            while num < 0:
+            if num < 0:
                 num = num + len(LETTERS)
 
             # add encrypted/decrypted number's symbol at the end of translated
