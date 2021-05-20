@@ -10,8 +10,7 @@ def ceaser(key, message:str, mode):
      # set to 'encrypt' or 'decrypt'
     # every possible symbol that can be encrypted
     LETTERS = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
-    test = len(message)
-    key %= test
+    
     LETTERS = encryptText.keyStringShuffle(LETTERS, key)
     translated = ''
 

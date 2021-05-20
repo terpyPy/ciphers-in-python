@@ -23,8 +23,7 @@ def decryptMessage(key, message):
     # The transposition decrypt function will simulate the "columns" and
     # "rows" of the grid that the plaintext is written on by using a list
     # of strings. First, we need to calculate a few values.
-    test = len(message)
-    key %= test
+    
     # The number of "columns" in our transposition grid:
     numOfColumns = math.ceil(len(message) / key)
     # The number of "rows" in our grid will need:
