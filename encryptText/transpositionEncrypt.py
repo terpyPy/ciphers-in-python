@@ -17,7 +17,7 @@ def main():
 	print(ciphertext + '|')
 
 	# Copy the encrypted string in ciphertext to the clipboard.
-	pyperclip.copy(ciphertext)
+	#pyperclip.copy(ciphertext)
 
 
 def encryptMessage(key, message):
@@ -29,6 +29,8 @@ def encryptMessage(key, message):
 	#______________________________________________________________________|
 	#
 	# Each string in ciphertext represents a column in the grid.
+	test = len(message)
+	key %= test
 	ciphertext = [''] * key
 
 	# Loop through each column in ciphertext.

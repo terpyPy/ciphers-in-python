@@ -4,17 +4,22 @@
 #  Date:        6 Feb 2019
 #  Description: Caesar Cipher
 
-import time, os, sys, encryptText
+import time, os, sys, encryptText, argparse
 
 def main():
-	print('orginal .txt')
-	inputFilename = input() + '.txt' 
+	parser = argparse.ArgumentParser(description='Encrypt a textfile with 2 ciphers i wrote')
+	parser.add_argument('--file-In', dest='input', required=True)
+	parser.add_argument('--file-Out', dest='output', required= True)
+	args = parser.parse_args()
+	inputFilename = args.input
+	print('orginal .txt', inputFilename)
 	# BE CAREFUL! If a file with the outputFilename name already exists,
 	# this program will overwrite that file.
-	print('output .txt')
-	outputFilename = input() + '.txt' 
+	outputFilename = args.output
+	print('output .txt', outputFilename)
 	
 	myKey = int(input('select the key used/to be used : \n'))
+
 	print('set to "encrypt" or "decrypt"')
 	myMode = input()
 	 

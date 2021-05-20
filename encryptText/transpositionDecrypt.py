@@ -2,7 +2,9 @@
 # Transposition Cipher Decryption
 #
 
-import math, pyperclip
+import math
+import pyperclip
+
 
 def main():
     myMessage = ''
@@ -14,14 +16,15 @@ def main():
     # there are spaces at the end of the decrypted message.
     print(plaintext + '|')
 
-    pyperclip.copy(plaintext)
+    # pyperclip.copy(plaintext)
 
 
 def decryptMessage(key, message):
     # The transposition decrypt function will simulate the "columns" and
     # "rows" of the grid that the plaintext is written on by using a list
     # of strings. First, we need to calculate a few values.
-
+    test = len(message)
+    key %= test
     # The number of "columns" in our transposition grid:
     numOfColumns = math.ceil(len(message) / key)
     # The number of "rows" in our grid will need:
@@ -39,7 +42,7 @@ def decryptMessage(key, message):
 
     for symbol in message:
         plaintext[col] += symbol
-        col += 1 # point to next column
+        col += 1  # point to next column
 
         # If there are no more columns OR we're at a shaded box, go back to
         # the first column and the next row.
